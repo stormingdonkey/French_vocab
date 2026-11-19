@@ -274,11 +274,14 @@ const App = {
       typed.disabled = true;
       if (!correct) typed.value = ex.word.fr;
     }
-    const check = document.getElementById("check-btn");
-    if (check) {
-      check.textContent = "Weiter";
-      check.onclick = () => this.nextExercise();
+    let check = document.getElementById("check-btn");
+    if (!check) {
+      check = document.createElement("button");
+      check.className = "btn btn-primary";
+      document.getElementById("controls").replaceChildren(check);
     }
+    check.textContent = "Weiter";
+    check.onclick = () => this.nextExercise();
     this.updateHeader();
   },
 
