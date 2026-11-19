@@ -1,9 +1,23 @@
+const ORDER = [
+  "l1", "g1", "l2", "l3", "g2", "l4", "l5", "g3", "l6", "l7", "g4", "l8", "l9", "l10",
+  "l11", "l12", "g5", "l13", "l14", "g6", "g7", "g8",
+  "l15", "g9", "l16", "g10", "l17", "g11",
+  "l18", "g12", "l19", "l20", "g13"
+];
+
+const LEVELS = [
+  ["A1", "A1 · Anfänger (6.–7. Klasse)"],
+  ["A2", "A2 · Fortgeschrittene Anfänger"],
+  ["B1", "B1 · Mittelstufe"],
+  ["B2", "B2 · Gehobene Mittelstufe"]
+];
+
 const SKEY = "vokifranz-v1";
 const XP_PER_CORRECT = 10;
 const PERFECT_BONUS = 20;
 
 function defaultState() {
-  return { xp: 0, streak: { n: 0, last: null }, completed: {}, stats: {}, custom: [] };
+  return { xp: 0, streak: { n: 0, last: null }, completed: {}, grammar: {}, stats: {}, custom: [] };
 }
 
 function loadState() {
@@ -49,13 +63,13 @@ function allLessonIds() {
 }
 
 function lessonUnlocked(lessonId) {
-  const ids = LESSONS.map((l) => l.id);
   if (lessonId === "custom") {
     return App.state.custom.length > 0;
   }
-  const idx = ids.indexOf(lessonId);
+  const idx = ORDER.indexOf(lessonId);
   if (idx <= 0) return true;
-  return !!App.state.completed[ids[idx - 1]];
+  const prev = ORDER[idx - 1];
+  return prev.startsWith("g") ? !!App.state.grammar[prev] : !!App.state.completed[prev];
 }
 
 function lessonAvgMastery(lessonId) {
@@ -89,6 +103,7 @@ const App = {
     const [name, arg] = parts;
     saveState();
     if (name === "lesson" && arg) this.screenLesson(arg);
+    else if (name === "grammar" && arg) this.screenGrammar(arg);
     else if (name === "practice") this.startSession(arg === "custom" ? "custom" : "practice", arg === "custom" ? "custom" : null);
     else if (name === "photo") this.screenPhoto();
     else if (name === "reuse") this.screenReview();
@@ -111,6 +126,48 @@ const App = {
     const yest = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
     s.n = s.last === yest ? s.n + 1 : 1;
     s.last = today;
+  },
+
+  screenGrammar(id) {
+    const g = GRAMMAR.find((x) => x.id === id);
+    if (!g) {
+      this.screenHome();
+      return;
+    }
+    this.currentScreen = "grammar";
+    const unlocked = lessonUnlocked(id);
+    const done = !!this.state.grammar[id];
+    document.getElementById("app").innerHTML = `
+      <div class="grammar-intro">
+        <h2>📘 ${g.title}</h2>
+        <div class="grammar-explain">${g.explain}</div>
+        ${unlocked
+          ? `<div class="review-actions">
+              <button class="btn btn-primary" id="grammar-start">${done ? "Wiederholen" : "Übung starten"} (${g.exercises.length})</button>
+              <a class="btn btn-ghost" href="#/home">Zurück</a>
+             </div>`
+          : `<p class="hint">🔒 Schließe die vorherige Lektion ab, um diese Grammatik freizuschalten.</p>
+             <div class="review-actions"><a class="btn btn-ghost" href="#/home">Zurück</a></div>`}
+      </div>
+      <div id="toast" class="toast"></div>
+    `;
+    const start = document.getElementById("grammar-start");
+    if (start) start.onclick = () => this.startGrammarSession(id);
+    this.updateHeader();
+  },
+
+  startGrammarSession(id) {
+    const g = GRAMMAR.find((x) => x.id === id);
+    if (!g) return;
+    const exercises = shuffle(g.exercises.map((e) => ({
+      isGrammar: true,
+      sentence: e.sentence,
+      options: e.options.slice(),
+      correctIdx: e.c,
+      why: e.why
+    })));
+    this.session = { mode: "grammar", lessonId: id, title: "📘 " + g.title, exercises, index: 0, correct: 0, answered: false, xpGain: 0, grammarAcc: 0 };
+    this.renderExercise();
   },
 
   startSession(mode, lessonId) {
@@ -191,13 +248,21 @@ const App = {
         <div class="bar"><div style="width:${(s.index / s.exercises.length) * 100}%"></div></div>
         <span class="session-count">${s.index + 1}/${s.exercises.length}</span>
       </div>
-      <h2 class="prompt">${ex.type === "choice-fr-de" ? "Was bedeutet" : "Wie sagt man"} „${ex.type === "choice-fr-de" ? ex.word.fr : ex.word.de}“${ex.type === "choice-fr-de" ? "?" : " auf Französisch?"}</h2>
+      <h2 class="prompt">${ex.isGrammar ? `Ergänze: <span class="sentence">„${ex.sentence.replace(/___/g, "_____")}“</span>` : `${ex.type === "choice-fr-de" ? "Was bedeutet" : "Wie sagt man"} „${ex.type === "choice-fr-de" ? ex.word.fr : ex.word.de}“${ex.type === "choice-fr-de" ? "?" : " auf Französisch?"}`}</h2>
       <div id="options" class="options"></div>
       <div id="feedback" class="feedback"></div>
       <div id="controls" class="controls"></div>
     `;
     const opts = document.getElementById("options");
-    if (ex.type.startsWith("choice")) {
+    if (ex.isGrammar) {
+      ex.options.forEach((o, i) => {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.textContent = o;
+        btn.onclick = () => this.answer(i === ex.correctIdx, ex, btn);
+        opts.appendChild(btn);
+      });
+    } else if (ex.type.startsWith("choice")) {
       const field = ex.type === "choice-fr-de" ? "de" : "fr";
       ex.options.forEach((o, i) => {
         const btn = document.createElement("button");
@@ -221,7 +286,7 @@ const App = {
       setTimeout(() => input.focus(), 30);
     }
     const ctrl = document.getElementById("controls");
-    if (ex.type.startsWith("type")) {
+    if (!ex.isGrammar && ex.type.startsWith("type")) {
       const btn = document.createElement("button");
       btn.className = "btn btn-primary";
       btn.id = "check-btn";
@@ -248,22 +313,28 @@ const App = {
     const s = this.session;
     if (s.answered) return;
     s.answered = true;
-    const st = App.state.stats[ex.word.id] || { s: 0, r: 0, w: 0 };
+    if (ex.word) {
+      const st = App.state.stats[ex.word.id] || { s: 0, r: 0, w: 0 };
+      if (correct) {
+        st.s = Math.min(5, st.s + 1);
+        st.r++;
+      } else {
+        st.s = Math.max(0, st.s - 1);
+        st.w++;
+      }
+      App.state.stats[ex.word.id] = st;
+    }
     if (correct) {
-      st.s = Math.min(5, st.s + 1);
-      st.r++;
       s.correct++;
       s.xpGain += XP_PER_CORRECT;
-    } else {
-      st.s = Math.max(0, st.s - 1);
-      st.w++;
     }
-    App.state.stats[ex.word.id] = st;
     const fb = document.getElementById("feedback");
     fb.classList.add(correct ? "good" : "bad");
+    const solution = ex.isGrammar ? ex.options[ex.correctIdx] : `„${ex.word.fr}“ – „${ex.word.de}“`;
+    const why = ex.why ? `<span class="why">💡 ${ex.why}</span>` : "";
     fb.innerHTML = correct
-      ? "✅ Richtig!"
-      : `❌ Fast! Richtig ist: <b>${ex.word.fr}</b> – <b>${ex.word.de}</b>`;
+      ? `✅ Richtig!${why}`
+      : `❌ Fast! Richtig ist: <b>${solution}</b>${why}`;
     document.querySelectorAll(".option").forEach((btn, i) => {
       btn.disabled = true;
       if (i === ex.correctIdx) btn.classList.add("correct");
@@ -298,6 +369,7 @@ const App = {
     const acc = s.correct / s.exercises.length;
     if (acc === 1) s.xpGain += PERFECT_BONUS;
     this.state.xp += s.xpGain;
+    if (s.mode === "grammar" && acc >= 0.8) this.state.grammar[s.lessonId] = true;
     if (s.mode === "lesson" && acc >= 0.8) this.state.completed[s.lessonId] = true;
     this.updateStreak();
     saveState();
@@ -308,6 +380,7 @@ const App = {
     const s = this.session || { correct: 0, exercises: [], xpGain: 0, mode: "practice", lessonId: null };
     const acc = Math.round((s.correct / Math.max(1, s.exercises.length)) * 100);
     const passed = acc >= 80;
+
     this.currentScreen = "result";
     document.getElementById("app").innerHTML = `
       <div class="result">
@@ -322,9 +395,16 @@ const App = {
       </div>
     `;
     document.getElementById("again-btn").onclick = () => {
-      if (s.mode === "lesson") this.navigate("#/lesson/" + s.lessonId);
-      else if (s.mode === "custom") this.navigate("#/practice/custom");
-      else this.navigate("#/practice");
+      if (s.mode === "grammar") {
+        this.startGrammarSession(s.lessonId);
+      } else if (s.mode === "lesson") {
+        this.navigate("#/lesson/" + s.lessonId);
+        this.route();
+      } else if (s.mode === "custom") {
+        this.startSession("custom", "custom");
+      } else {
+        this.startSession("practice", null);
+      }
     };
     this.updateHeader();
   },
@@ -332,18 +412,37 @@ const App = {
   screenHome() {
     this.currentScreen = "home";
     const seenCount = ALL_WORDS.concat(lessonWords("custom")).filter((w) => wordStat(w.id).s > 0).length;
-    const section = (grade, label) => {
-      const items = LESSONS.filter((l) => l.grade === grade).map((lesson) => {
-        const unlocked = lessonUnlocked(lesson.id);
-        const done = !!this.state.completed[lesson.id];
-        const m = lessonAvgMastery(lesson.id);
+    const section = (level, label) => {
+      const items = ORDER.filter((id) => {
+        const item = id.startsWith("g") ? GRAMMAR.find((g) => g.id === id) : LESSONS.find((l) => l.id === id);
+        return item && item.level === level;
+      }).map((id) => {
+        if (id.startsWith("g")) {
+          const g = GRAMMAR.find((x) => x.id === id);
+          const unlocked = lessonUnlocked(id);
+          const done = !!this.state.grammar[id];
+          const badge = !unlocked ? `<span class="lock">🔒</span>` : done ? `<span class="done-check">✓</span>` : `<span class="start-label">Start</span>`;
+          return `
+          <a class="lesson-row grammar-row ${unlocked ? "" : "locked"}" href="${unlocked ? "#/grammar/" + id : "#"}" ${unlocked ? "" : 'onclick="return false;"'}>
+            <span class="lesson-emoji">📘</span>
+            <span class="lesson-text">
+              <span class="lesson-title">${g.title} <span class="badge">Grammatik</span></span>
+              <span class="lesson-sub">Kurzlektion · ${g.exercises.length} Übungen</span>
+            </span>
+            ${badge}
+          </a>`;
+        }
+        const lesson = LESSONS.find((l) => l.id === id);
+        const unlocked = lessonUnlocked(id);
+        const done = !!this.state.completed[id];
+        const m = lessonAvgMastery(id);
         const starCount = Math.round(m / 2);
         let badge;
         if (!unlocked) badge = `<span class="lock">🔒</span>`;
         else if (done) badge = `<span class="stars">${"★".repeat(starCount)}${"☆".repeat(3 - starCount)}</span>`;
         else badge = `<span class="start-label">Start</span>`;
         return `
-          <a class="lesson-row ${unlocked ? "" : "locked"}" href="${unlocked ? "#/lesson/" + lesson.id : "#"}" ${unlocked ? "" : 'onclick="return false;"'}>
+          <a class="lesson-row ${unlocked ? "" : "locked"}" href="${unlocked ? "#/lesson/" + id : "#"}" ${unlocked ? "" : 'onclick="return false;"'}>
             <span class="lesson-emoji">${lesson.emoji}</span>
             <span class="lesson-text">
               <span class="lesson-title">${lesson.title}</span>
@@ -372,7 +471,7 @@ const App = {
         </div>
       </div>
       <div id="toast" class="toast"></div>
-      ${section(6, "6. Klasse · A1")}
+      ${LEVELS.map(([lv, label]) => section(lv, label)).join("")}
       ${customCount ? `
       <h3 class="grade-label">Meine Vokabeln</h3>
       <div class="lesson-list">
@@ -385,7 +484,6 @@ const App = {
           <span class="start-label">Start</span>
         </a>
       </div>` : ""}
-      ${section(7, "7. Klasse · A1 weiterführend")}
     `;
     this.updateHeader();
   },

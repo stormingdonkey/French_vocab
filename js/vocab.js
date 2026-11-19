@@ -4,6 +4,7 @@ const LESSONS = [
     title: "Begrüßung & Vorstellen",
     subtitle: "Saluer et se présenter",
     grade: 6,
+    level: "A1",
     emoji: "👋",
     words: [
       ["bonjour", "guten Tag"],
@@ -30,6 +31,7 @@ const LESSONS = [
     title: "Zahlen & Farben",
     subtitle: "Nombres et couleurs",
     grade: 6,
+    level: "A1",
     emoji: "🎨",
     words: [
       ["un", "eins"],
@@ -55,6 +57,7 @@ const LESSONS = [
     title: "In der Schule",
     subtitle: "À l'école",
     grade: 6,
+    level: "A1",
     emoji: "🏫",
     words: [
       ["le crayon", "der Stift"],
@@ -79,6 +82,7 @@ const LESSONS = [
     title: "Meine Familie",
     subtitle: "Ma famille",
     grade: 6,
+    level: "A1",
     emoji: "👨‍👩‍👧",
     words: [
       ["la mère", "die Mutter"],
@@ -102,6 +106,7 @@ const LESSONS = [
     title: "Essen & Trinken",
     subtitle: "Manger et boire",
     grade: 6,
+    level: "A1",
     emoji: "🍞",
     words: [
       ["le pain", "das Brot"],
@@ -127,6 +132,7 @@ const LESSONS = [
     title: "Zeit & Wochentage",
     subtitle: "Le temps",
     grade: 6,
+    level: "A1",
     emoji: "🕒",
     words: [
       ["lundi", "Montag"],
@@ -152,6 +158,7 @@ const LESSONS = [
     title: "Freizeit & Sport",
     subtitle: "Les loisirs",
     grade: 7,
+    level: "A1",
     emoji: "⚽",
     words: [
       ["le football", "der Fußball"],
@@ -177,6 +184,7 @@ const LESSONS = [
     title: "In der Stadt",
     subtitle: "En ville",
     grade: 7,
+    level: "A1",
     emoji: "🏙️",
     words: [
       ["la rue", "die Straße"],
@@ -202,6 +210,7 @@ const LESSONS = [
     title: "Körper & Gesundheit",
     subtitle: "Le corps",
     grade: 7,
+    level: "A1",
     emoji: "🩹",
     words: [
       ["la tête", "der Kopf"],
@@ -225,6 +234,7 @@ const LESSONS = [
     title: "Wetter & Kleidung",
     subtitle: "La météo et les vêtements",
     grade: 7,
+    level: "A1",
     emoji: "🧥",
     words: [
       ["il fait beau", "das Wetter ist schön"],
@@ -243,6 +253,256 @@ const LESSONS = [
       ["le chapeau", "der Hut"],
       ["porter", "tragen"]
     ]
+  },
+  {
+    id: "l11",
+    title: "Reisen & Transport",
+    subtitle: "Voyager",
+    grade: 0,
+    level: "A2",
+    emoji: "✈️",
+    words: [
+      ["l'avion", "das Flugzeug"],
+      ["la valise", "der Koffer"],
+      ["le billet", "das Ticket"],
+      ["l'aéroport", "der Flughafen"],
+      ["réserver", "buchen"],
+      ["partir", "abfahren / losfahren"],
+      ["arriver", "ankommen"],
+      ["le voyage", "die Reise"],
+      ["la frontière", "die Grenze"],
+      ["l'hôtel", "das Hotel"],
+      ["la plage", "der Strand"],
+      ["le départ", "die Abfahrt"],
+      ["l'arrivée", "die Ankunft"],
+      ["manquer le train", "den Zug verpassen"],
+      ["en retard", "zu spät"]
+    ]
+  },
+  {
+    id: "l12",
+    title: "Im Restaurant",
+    subtitle: "Au restaurant",
+    grade: 0,
+    level: "A2",
+    emoji: "🍽️",
+    words: [
+      ["la carte", "die Speisekarte"],
+      ["commander", "bestellen"],
+      ["le serveur", "der Kellner"],
+      ["l'addition", "die Rechnung"],
+      ["délicieux", "köstlich"],
+      ["le dessert", "das Dessert"],
+      ["l'entrée", "die Vorspeise"],
+      ["le plat principal", "das Hauptgericht"],
+      ["un verre de ...", "ein Glas ..."],
+      ["avoir soif", "Durst haben"],
+      ["préférer", "bevorzugen"],
+      ["demander", "fragen / bitten"],
+      ["apporter", "bringen"],
+      ["goûter", "kosten / probieren"],
+      ["c'était très bon", "das war sehr lecker"]
+    ]
+  },
+  {
+    id: "l13",
+    title: "Wohnen & Haushalt",
+    subtitle: "Se loger",
+    grade: 0,
+    level: "A2",
+    emoji: "🏠",
+    words: [
+      ["la maison", "das Haus"],
+      ["l'appartement", "die Wohnung"],
+      ["la chambre", "das Schlafzimmer"],
+      ["la cuisine", "die Küche / das Kochen"],
+      ["le salon", "das Wohnzimmer"],
+      ["les meubles", "die Möbel"],
+      ["le loyer", "die Miete"],
+      ["nettoyer", "putzen"],
+      ["ranger", "aufräumen"],
+      ["le jardin", "der Garten"],
+      ["l'escalier", "die Treppe"],
+      ["l'ascenseur", "der Aufzug"],
+      ["déménager", "umziehen"],
+      ["s'installer", "einziehen"],
+      ["éteindre", "ausschalten / ausmachen"]
+    ]
+  },
+  {
+    id: "l14",
+    title: "Beruf & Ausbildung",
+    subtitle: "Le travail",
+    grade: 0,
+    level: "A2",
+    emoji: "💼",
+    words: [
+      ["le métier", "der Beruf"],
+      ["travailler", "arbeiten"],
+      ["le travail", "die Arbeit"],
+      ["la formation", "die Ausbildung"],
+      ["l'entreprise", "die Firma"],
+      ["le patron", "der Chef"],
+      ["le salaire", "das Gehalt"],
+      ["postuler", "sich bewerben"],
+      ["le CV", "der Lebenslauf"],
+      ["l'entretien d'embauche", "das Vorstellungsgespräch"],
+      ["devenir", "werden"],
+      ["gagner", "verdienen / gewinnen"],
+      ["l'avenir", "die Zukunft"],
+      ["réussir", "schaffen / Erfolg haben"],
+      ["chercher un emploi", "eine Stelle suchen"]
+    ]
+  },
+  {
+    id: "l15",
+    title: "Meinung & Diskussion",
+    subtitle: "Donner son opinion",
+    grade: 0,
+    level: "B1",
+    emoji: "💬",
+    words: [
+      ["je pense que", "ich denke, dass"],
+      ["selon moi", "meiner Meinung nach"],
+      ["être d'accord (avec)", "einverstanden sein (mit)"],
+      ["pas du tout", "gar nicht"],
+      ["l'opinion", "die Meinung"],
+      ["discuter", "diskutieren / sich unterhalten"],
+      ["convaincre", "überzeugen"],
+      ["cependant", "jedoch"],
+      ["par contre", "allerdings / dagegen"],
+      ["en effet", "nämlich / tatsächlich"],
+      ["donc", "also"],
+      ["d'une part ... d'autre part", "einerseits ... andererseits"],
+      ["à mon avis", "meiner Ansicht nach"],
+      ["réagir", "reagieren"],
+      ["l'avantage", "der Vorteil"]
+    ]
+  },
+  {
+    id: "l16",
+    title: "Umwelt & Klima",
+    subtitle: "L'environnement",
+    grade: 0,
+    level: "B1",
+    emoji: "🌍",
+    words: [
+      ["l'environnement", "die Umwelt"],
+      ["le changement climatique", "der Klimawandel"],
+      ["protéger", "schützen"],
+      ["polluer", "verschmutzen"],
+      ["la pollution", "die Verschmutzung"],
+      ["recycler", "recyceln"],
+      ["les déchets", "der Müll"],
+      ["trier", "sortieren"],
+      ["les énergies renouvelables", "erneuerbare Energien"],
+      ["l'énergie solaire", "die Sonnenenergie"],
+      ["le réchauffement climatique", "die Erderwärmung"],
+      ["en danger", "bedroht"],
+      ["économiser", "sparen"],
+      ["l'air pur", "die frische Luft"],
+      ["la nature", "die Natur"]
+    ]
+  },
+  {
+    id: "l17",
+    title: "Medien & Technik",
+    subtitle: "Les médias",
+    grade: 0,
+    level: "B1",
+    emoji: "📱",
+    words: [
+      ["les réseaux sociaux", "die sozialen Medien"],
+      ["l'écran", "der Bildschirm"],
+      ["publier", "veröffentlichen"],
+      ["la publicité", "die Werbung"],
+      ["télécharger", "herunterladen"],
+      ["envoyer un message", "eine Nachricht schicken"],
+      ["en ligne", "online"],
+      ["s'abonner", "abonnieren"],
+      ["le mot de passe", "das Passwort"],
+      ["l'appareil", "das Gerät"],
+      ["rechercher", "recherchieren / suchen"],
+      ["fiable", "zuverlässig"],
+      ["la connexion", "die Verbindung / Internet"],
+      ["l'actualité", "die aktuellen Nachrichten"],
+      ["informer", "informieren"]
+    ]
+  },
+  {
+    id: "l18",
+    title: "Gesellschaft & Politik",
+    subtitle: "Société et politique",
+    grade: 0,
+    level: "B2",
+    emoji: "🏛️",
+    words: [
+      ["la société", "die Gesellschaft"],
+      ["le citoyen", "der Bürger"],
+      ["le gouvernement", "die Regierung"],
+      ["voter", "wählen"],
+      ["la loi", "das Gesetz"],
+      ["le droit", "das Recht"],
+      ["les inégalités", "die Ungleichheiten"],
+      ["le chômage", "die Arbeitslosigkeit"],
+      ["s'engager (pour)", "sich engagieren (für)"],
+      ["la manifestation", "die Demonstration"],
+      ["l'égalité", "die Gleichberechtigung"],
+      ["lutter contre", "kämpfen gegen"],
+      ["le pouvoir", "die Macht"],
+      ["la liberté d'expression", "die Meinungsfreiheit"],
+      ["assister à", "teilnehmen an"]
+    ]
+  },
+  {
+    id: "l19",
+    title: "Gefühle & Nuancen",
+    subtitle: "Les émotions",
+    grade: 0,
+    level: "B2",
+    emoji: "💗",
+    words: [
+      ["s'inquiéter", "sich Sorgen machen"],
+      ["être déçu(e)", "enttäuscht sein"],
+      ["la joie", "die Freude"],
+      ["la confiance", "das Vertrauen"],
+      ["se méfier (de)", "misstrauisch sein (gegenüber)"],
+      ["s'énerver", "sich aufregen"],
+      ["rassurer", "beruhigen"],
+      ["hésiter", "zögern"],
+      ["éprouver", "empfinden"],
+      ["la tristesse", "die Traurigkeit"],
+      ["la colère", "die Wut"],
+      ["l'espoir", "die Hoffnung"],
+      ["se réjouir (de)", "sich freuen (auf/über)"],
+      ["être touché(e)", "berührt sein"],
+      ["le courage", "der Mut"]
+    ]
+  },
+  {
+    id: "l20",
+    title: "Ausdrücke & Redemittel",
+    subtitle: "Expressions utiles",
+    grade: 0,
+    level: "B2",
+    emoji: "🗣️",
+    words: [
+      ["il s'agit de", "es handelt sich um"],
+      ["avoir du mal à", "Schwierigkeiten haben mit"],
+      ["en revanche", "hingegen"],
+      ["d'autant plus que", "umso mehr, da"],
+      ["à condition que", "vorausgesetzt, dass"],
+      ["mettre en question", "in Frage stellen"],
+      ["faire allusion à", "anspielen auf"],
+      ["tenir compte de", "berücksichtigen"],
+      ["se rendre compte (de)", "sich bewusst werden"],
+      ["au fur et à mesure", "nach und nach"],
+      ["de toute façon", "sowieso"],
+      ["néanmoins", "dennoch"],
+      ["par ailleurs", "außerdem"],
+      ["en fin de compte", "letztendlich"],
+      ["valoir la peine", "sich lohnen"]
+    ]
   }
 ];
 
@@ -252,6 +512,7 @@ function wordId(fr, de) {
 
 function buildWordIndex() {
   const all = [];
+
   for (const lesson of LESSONS) {
     for (const [fr, de] of lesson.words) {
       all.push({ id: wordId(fr, de), fr, de, lessonId: lesson.id, grade: lesson.grade, custom: false });

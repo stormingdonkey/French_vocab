@@ -1,14 +1,19 @@
 # 🥐 VokiFranz
 
-VokiFranz ist eine kleine Duolingo-artige App zum Französisch-Lernen für die **6. und 7. Klasse (Niveau A1)**.
+VokiFranz ist eine Duolingo-artige App zum Französisch-Lernen – von **A1 (6./7. Klasse) bis B2**.
 
 ## Was kann die App?
 
-- **10 Lektionen** mit den Grund-Vokabeln der 6. und 7. Klasse (Begrüßung, Zahlen & Farben, Schule, Familie, Essen & Trinken, Zeit, Freizeit, Stadt, Körper & Gesundheit, Wetter & Kleidung)
-- **Übungsarten wie bei Duolingo:** Multiple Choice (Deutsch → Französisch und umgekehrt) und Tippen
+- **20 Vokabel-Lektionen in vier Niveaus:**
+  - **A1 · Anfänger (6.–7. Klasse):** Begrüßung, Zahlen & Farben, Schule, Familie, Essen & Trinken, Zeit, Freizeit, Stadt, Körper & Gesundheit, Wetter & Kleidung
+  - **A2:** Reisen & Transport, Restaurant, Wohnen & Haushalt, Beruf & Ausbildung
+  - **B1:** Meinung & Diskussion, Umwelt & Klima, Medien & Technik
+  - **B2:** Gesellschaft & Politik, Gefühle & Nuancen, Ausdrücke & Redemittel
+- **13 Grammatik-Kurzlektionen (📘):** kurze Erklärung + Übungen mit Rückmeldung, eingestreut in den Lernpfad – von Artikeln und être/avoir (A1) über Passé composé und Imparfait (A2) und Subjonctif (B1) bis Plus-que-parfait und Gérondif (B2)
+- **Ein Lernpfad:** Alles ist in einer Kette angeordnet – Vokabeln und Grammatik wechseln sich ab, Freischaltung jeweils mit 80 % Bestehen
+- **Übungsarten wie bei Duolingo:** Multiple Choice (Deutsch → Französisch und umgekehrt), Sätze ergänzen (Grammatik) und Tippen
 - **Wiederholungs-Algorithmus:** Wörter, die oft falsch waren, kommen häufiger wieder. Jedes Wort hat 5 „Meisterschaftsstufen“ und wird bei Fehlern zurückgestuft.
 - **XP und Tagesstreak:** Für richtige Antworten gibt es XP ⚡, für jeden Tag mit Übung einen Streak 🔥
-- **Lektionen schalten sich frei:** Eine Lektion wird verfügbar, sobald die vorherige (zu 80 % richtig) abgeschlossen ist.
 - **📷 Vokabeln per Foto:** Eigene Vokabellisten (z. B. aus dem Heft) abfotografieren – die App liest die Wörter per Texterkennung (OCR) ein, man kann sie prüfen/korrigieren und in den Übungs-Algorithmus aufnehmen.
 
 ## Wie benutze ich die App?

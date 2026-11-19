@@ -476,6 +476,53 @@ h2 {
   transform: translateX(-50%) translateY(0);
 }
 
+.badge {
+  display: inline-block;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.grammar-row {
+  border-color: #b3e0f7;
+  background: #f4fbff;
+}
+
+.done-check {
+  color: var(--green);
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.prompt .sentence {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.1rem;
+}
+
+.why {
+  display: block;
+  margin-top: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.grammar-explain {
+  background: #f4fbff;
+  border: 2px solid #b3e0f7;
+  border-radius: 14px;
+  padding: 14px 16px;
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
 @media (max-width: 420px) {
   .options {
     grid-template-columns: 1fr;
